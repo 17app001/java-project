@@ -66,16 +66,26 @@ public class LoanCalc extends JFrame implements ActionListener {
 
     // 本息平均攤還
     public double[][] event2(double amount, double fee, double rate, int priod) {
-
         double tempTotalAmount = amount;
         double[][] resultArray = new double[priod][3];
-        // 每月利息
-        double interest = Math.round(amount * rate / 12);
-        // 每月本金
-        double pay = Math.round(amount / priod);
+        double monthRate = rate / 12;
 
+        // {[(1＋月利率)^月數]×月利率}÷{[(1＋月利率)^月數]－1}
+        double payRate = (Math.pow((1 + monthRate), priod) * monthRate) /
+                ((Math.pow((1 + monthRate), priod) - 1));
+        // 平均攤還率
+        // System.out.println(payRate);
+        // 貸款本金×每月應付本息金額之平均攤還率(固定)
+        double monthPay = Math.ceil(tempTotalAmount * payRate);
+
+        // https://www.ks888.com.tw/www/bank1.htm
         for (int i = 0; i < priod; i++) {
+            // 每月應付利息金額
+            double interest = Math.round(tempTotalAmount * monthRate);
+            double pay = monthPay - interest;
+            // 每月應還本金金額
             tempTotalAmount -= pay;
+
             resultArray[i][0] = pay;
             resultArray[i][1] = interest;
             resultArray[i][2] = tempTotalAmount;

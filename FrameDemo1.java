@@ -2,14 +2,14 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import java.awt.event.*;
 
-public class FrameDemo1 extends JFrame implements ActionListener {
+public class FrameDemo extends JFrame implements ActionListener {
     int counter = 0;
 
     public static void main(String[] args) {
-        new FrameDemo1();
+        new FrameDemo();
     }
 
-    FrameDemo1() {
+    FrameDemo() {
         this.setTitle("點擊" + counter + "按鈕!");
         JButton button = new JButton("確定");
         // button.addActionListener(this);
